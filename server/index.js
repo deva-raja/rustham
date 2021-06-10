@@ -1,5 +1,6 @@
 const SellerRouter = require('./route/SellerRouter');
 const ProductRouter = require('./route/ProductRouter');
+const UserRouter = require('./route/UserRouter');
 
 const express = require('express');
 var cors = require('cors');
@@ -40,3 +41,4 @@ app.get('/', (req, res) => {
 app.use('/auth', authMiddleWare);
 app.use('/seller', SellerRouter);
 app.use('/product', ProductRouter);
+app.use('/user', UserRouter);

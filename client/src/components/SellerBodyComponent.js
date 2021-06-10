@@ -16,7 +16,7 @@ function SellerBodyComponent({ setSellerId }) {
   return (
     <div>
       {sellerArray &&
-        sellerArray.map((seller,index) => (
+        sellerArray.map((seller, index) => (
           <SellerCardComponent key={index} seller={seller} setSellerId={setSellerId} />
         ))}
     </div>

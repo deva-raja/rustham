@@ -28,13 +28,14 @@ const handleError = (error) => {
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-  return jwt.sign({ id }, process.env.jwtKey, {
+  return jwt.sign({ id }, 'rustham', {
     expiresIn: maxAge,
   });
 };
 
 const login_post = async (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body);
   try {
     const user = await User.login(email, password);
 
@@ -46,6 +47,17 @@ const login_post = async (req, res) => {
   }
 };
 
+const create_post = async (req, res) => {
+  try {
+    const user = await User.create(req.body);
+    res.status(201).json({ user });
+  } catch (error) {
+    const errors = handleError(error);
+    res.status(200).json({ errors });
+  }
+};
+
 module.exports = {
   login_post,
+  create_post,
 };

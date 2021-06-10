@@ -5,6 +5,7 @@ function ProductCardComponent({ product, setProductId }) {
   const handleClick = () => {
     setProductId(product._id);
   };
+
   
   return (
     <div>

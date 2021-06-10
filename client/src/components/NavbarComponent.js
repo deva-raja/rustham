@@ -6,6 +6,10 @@ function NavbarComponent() {
   const [page, setPage] = useState('login');
   const location = useLocation();
 
+  const handleLogout = () => {
+    localStorage.clear();
+  };
+
   useEffect(() => {
     const user = localStorage.getItem('user') || null;
     const pageLoad = async () => {
@@ -53,12 +57,11 @@ function NavbarComponent() {
             {/* conditionally check if to display logout or not  */}
             {page === 'user' && (
               <li className='nav-item'>
-                <Link className='nav-link' to='/'>
+                <Link className='nav-link' to='/' onClick={handleLogout}>
                   log out
                 </Link>
               </li>
             )}
-            
           </ul>
           <Link className='d-flex' to='/cart'>
             <button className='btn btn-outline-dark'>

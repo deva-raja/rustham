@@ -1,26 +1,25 @@
-import React, { useRef, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
 import { Field, Form, Formik } from 'formik';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
+import { loginUser } from '../api/UserApi';
 
 function Login() {
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
   const [serverError, setServerError] = useState();
   const history = useHistory();
 
-  const removeDoctorSchema = Yup.object().shape({
+  const userSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
     password: Yup.string().min(2, 'Too Short!').max(120, 'Too Long!').required('Required'),
   });
 
   const onSubmit = async (values, { setSubmitting, resetForm }) => {
     setSubmitting(true);
-    const data = await loginDoctor(values);
-    console.log(data);
+    const data = await loginUser(values);
+    console.log({ data });
     if (data.data) {
       resetForm();
-      return history.push('/doctor');
+      return history.push('/product');
     }
 
     if (data.error) {
@@ -33,61 +32,41 @@ function Login() {
     email: '',
     password: '',
   };
-   
 
   return (
     <div>
-      <div style={{ paddingTop: 60 }}>
-        <div className='card login-card' style={{ backgroundColor: 'silver' }}>
-          <div className='card-body'>
-            <h3 className='text-center text-white font-weight-light mb-4'>USER LOG IN</h3>
+      <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={userSchema}>
+        {({ errors, touched, isSubmitting, values }) => (
+          <Form className='form' id='a-form'>
+            <h2 className='form_title title'>Login Form</h2>
 
+            <Field className='form__input' name='email' placeholder='Email' />
+            {serverError && serverError.error && (
+              <div className='form-error'>{serverError.error.email}</div>
+            )}
+            {touched.email && errors.email && <div className='form-error'>{errors.email}</div>}
 
-            
-            <form action='/product'>
-              <div className='form-group'>
-                <input
-                  type='text'
-                  placeholder='First name'
-                  className='form-control'
-                ></input>
-              </div>
-              <div className='form-group'>
-                <input
-                  type='text'
-                  placeholder='Password'
-                  className='form-control'
-                ></input>
-              </div>
-              <input
-                type='submit'
-                value='Login'
-                className='btn btn-danger btn-block mb-3'
-              ></input>
-            </form>
+            <Field className='form__input' name='password' placeholder='Password' />
+            {serverError && serverError.error && (
+              <div className='form-error'>{serverError.error.password}</div>
+            )}
+            {touched.password && errors.password && (
+              <div className='form-error'>{errors.password}</div>
+            )}
 
-
-
-            <div className='d-flex justify-content-between mt-4'>
-              <p className='text-white text-center font-weight-light'>Login with</p>
-              <p className='text-center mb-0'>
-                <a href='#' className='social-login-btn icon-fb'>
-                  <i className='mdi mdi-facebook-box'></i>
-                </a>
-                <a href='#' className='social-login-btn icon-twitter'>
-                  <i className='mdi mdi-twitter'></i>
-                </a>
-                <a href='#' className='social-login-btn icon-gmail'>
-                  <i className='mdi mdi-gmail'></i>
-                </a>
-              </p>
-              <p>
-                New User -<Link to='/signup'>sign up</Link>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+            <button
+              disabled={isSubmitting}
+              type='submit'
+              className='form__button button submit message-button'
+            >
+              Login
+            </button>
+          </Form>
+        )}
+      </Formik>
+      <p>
+        new User -<Link to='/signup'>signup</Link>
+      </p>
     </div>
   );
 }

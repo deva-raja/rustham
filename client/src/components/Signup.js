@@ -1,33 +1,67 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Field, Form, Formik } from 'formik';
+import * as Yup from 'yup';
+import { createUser } from '../api/UserApi';
+import { useHistory } from 'react-router';
 
 function Signup() {
+  const [serverError, setServerError] = useState();
+  const history = useHistory();
+
+  const createUserSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email').required('Required'),
+    password: Yup.string().min(2, 'Too Short!').max(120, 'Too Long!').required('Required'),
+  });
+
+  const initialValues = {
+    email: '',
+    password: '',
+  };
+
+  const onSubmit = async (values, { setSubmitting, resetForm }) => {
+    setSubmitting(true);
+    const data = await createUser(values);
+
+    if (data.data) {
+      setSubmitting(false);
+      resetForm();
+      return history.push('/login');
+    }
+
+    if (data.error) {
+      setServerError(data);
+      return setSubmitting(false);
+    }
+  };
+
   return (
     <div>
-      <p>Signup</p>
-      <div style={{ paddingTop: 60 }}>
-        <div className='card login-card' style={{ backgroundColor: 'silver' }}>
-          <div className='card-body'>
-            <h3 className='text-center text-white font-weight-light mb-4'>SIGN UP</h3>
-            <form action='/login'>
-              <div className='form-group'>
-                <input type='text' placeholder='email' className='form-control'></input>
-              </div>
-              <div>Error</div>
-              <div className='form-group'>
-                <input type='text' placeholder='Password' className='form-control'></input>
-              </div>
-              <div>Error</div>
-              <input
-                type='submit'
-                value='Sign up'
-                className='btn btn-danger btn-block mb-3'
-              ></input>
-            </form>
-          </div>
-        </div>
-      </div>
-      <Link to='/'>back to home</Link>
+      <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={createUserSchema}>
+        {({ errors, touched, isSubmitting, values }) => (
+          <Form className='form' id='a-form'>
+            <h2 className='form_title title'>Sign up</h2>
+
+            <Field className='form__input' name='email' placeholder='Email' />
+            {serverError && serverError.error && (
+              <div className='form-error'>{serverError.error}</div>
+            )}
+            {touched.email && errors.email && <div className='form-error'>{errors.email}</div>}
+
+            <Field className='form__input' name='password' placeholder='Password' />
+            {touched.password && errors.password && (
+              <div className='form-error'>{errors.password}</div>
+            )}
+
+            <button
+              disabled={isSubmitting}
+              type='submit'
+              className='form__button button submit message-button'
+            >
+              Sign Up
+            </button>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 }
