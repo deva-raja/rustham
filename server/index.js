@@ -4,7 +4,7 @@ const ProductRouter = require('./route/ProductRouter');
 const express = require('express');
 var cors = require('cors');
 const mongoose = require('mongoose');
-// const { authMiddleWare } = require('./middleware/AuthmiddleWare');
+const { authMiddleWare } = require('./middleware/AuthmiddleWare');
 const { urlencoded } = require('express');
 
 const PORT = 5000;
@@ -37,6 +37,6 @@ app.get('/', (req, res) => {
   res.sendFile('./views/index.html', { root: __dirname });
 });
 
-// app.use('/auth', authMiddleWare);
+app.use('/auth', authMiddleWare);
 app.use('/seller', SellerRouter);
 app.use('/product', ProductRouter);

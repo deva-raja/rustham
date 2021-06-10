@@ -1,22 +1,37 @@
-import React, { Component } from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-class Login extends Component {
-  state = {};
-  render() {
-    return (
+function Login() {
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  const handleSubmit = () => {
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+  };
+
+  return (
+    <div>
       <div style={{ paddingTop: 60 }}>
         <div className='card login-card' style={{ backgroundColor: 'silver' }}>
           <div className='card-body'>
-            <h3 className='text-center text-white font-weight-light mb-4'>
-              {this.props.client}LOG IN
-            </h3>
-            <form action='/product'>
+            <h3 className='text-center text-white font-weight-light mb-4'>USER LOG IN</h3>
+            <form action='/product' onSubmit={handleSubmit}>
               <div className='form-group'>
-                <input type='text' placeholder='First name' className='form-control'></input>
+                <input
+                  type='text'
+                  ref={emailRef}
+                  placeholder='First name'
+                  className='form-control'
+                ></input>
               </div>
               <div className='form-group'>
-                <input type='text' placeholder='Password' className='form-control'></input>
+                <input
+                  type='text'
+                  placeholder='Password'
+                  ref={passwordRef}
+                  className='form-control'
+                ></input>
               </div>
               <input type='submit' value='Login' className='btn btn-danger btn-block mb-3'></input>
             </form>
@@ -40,8 +55,8 @@ class Login extends Component {
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Login;
