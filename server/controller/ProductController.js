@@ -14,7 +14,7 @@ const showAll_post = async (req, res) => {
 const showSingle_post = async (req, res) => {
   const reqProduct = req.body;
   try {
-    const product = await Product.find({ _id: reqProduct.id });
+    const product = await Product.find({ _id: reqProduct.productId });
     res.status(201).json({ product });
   } catch (error) {
     const errors = error.message;

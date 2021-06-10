@@ -19,11 +19,11 @@ function ProductCardComponent({ product, setProductId }) {
                   <div class='text-center'>
                     <h5 className='fw-bolder'>{product.name}</h5>
                     <div className='d-flex justify-content-center small text-warning mb-2'>
-                      <div class='bi-star-fill'></div>
-                      <div class='bi-star-fill'></div>
-                      <div class='bi-star-fill'></div>
-                      <div class='bi-star-fill'></div>
-                      <div class='bi-star-fill'></div>
+                      <div className='bi-star-fill'></div>
+                      <div className='bi-star-fill'></div>
+                      <div className='bi-star-fill'></div>
+                      <div className='bi-star-fill'></div>
+                      <div className='bi-star-fill'></div>
                     </div>
                     ${product.price}
                   </div>
