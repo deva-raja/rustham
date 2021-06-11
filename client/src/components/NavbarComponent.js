@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { jwtAuthCheck } from '../api/jwtApi';
 
-function NavbarComponent() {
+function NavbarComponent({ setCartProducts, cartProducts }) {
   const [page, setPage] = useState('login');
   const location = useLocation();
 
+  console.log(cartProducts, 'cart');
+
   const handleLogout = () => {
+    setCartProducts([]);
     localStorage.clear();
   };
 
@@ -67,7 +70,9 @@ function NavbarComponent() {
             <button className='btn btn-outline-dark'>
               <i className='bi-cart-fill me-1'></i>
               Cart
-              <span className='badge bg-dark text-white ms-1 rounded-pill'>0</span>
+              <span className='badge bg-dark text-white ms-1 rounded-pill'>
+                {cartProducts.length}
+              </span>
             </button>
           </Link>
         </div>

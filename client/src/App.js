@@ -12,11 +12,12 @@ import SingleProductComponent from './components/SingleProductComponent';
 function App() {
   const [sellerId, setSellerId] = useState();
   const [productId, setProductId] = useState();
+  const [cartProducts, setCartProducts] = useState([]);
 
   return (
     <Router>
       <div className='App'>
-        <NavbarComponent />
+        <NavbarComponent setCartProducts={setCartProducts} cartProducts={cartProducts} />
         <Switch>
           <Route exact path='/'>
             <SellerBodyComponent setSellerId={setSellerId} />
@@ -25,7 +26,10 @@ function App() {
             <ProductBodyComponent sellerId={sellerId} setProductId={setProductId} />
           </Route>
           <Route exact path='/productItem'>
-            <SingleProductComponent productId={productId} />
+            <SingleProductComponent productId={productId} setCartProducts={setCartProducts} />
+          </Route>
+          <Route exact path='/cart'>
+            <Cart cartProducts={cartProducts} />
           </Route>
           <Route exact path='/login'>
             <Login client='USER' sellerId={sellerId} />
@@ -36,9 +40,6 @@ function App() {
           </Route>
           <Route exact path='/about'>
             <About />
-          </Route>
-          <Route exact path='/cart'>
-            <Cart />
           </Route>
         </Switch>
       </div>
