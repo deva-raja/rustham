@@ -22,7 +22,19 @@ const showSingle_post = async (req, res) => {
   }
 };
 
+const showCartProduct_post = async (req, res) => {
+  const ids = req.body.ids;
+  try {
+    const product = await Product.find({ '_id': { $in: ids } });
+    res.status(201).json({ product });
+  } catch (error) {
+    const errors = error.message;
+    res.status(200).json({ errors });
+  }
+};
+
 module.exports = {
   showAll_post,
   showSingle_post,
+  showCartProduct_post,
 };

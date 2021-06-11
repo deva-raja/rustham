@@ -19,3 +19,12 @@ export async function showSingleProduct(productId) {
     console.log(error);
   }
 }
+
+export async function showCartProduct(ids) {
+  try {
+    const response = await axios.post(`${url}/product/showCart`, { ids });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
