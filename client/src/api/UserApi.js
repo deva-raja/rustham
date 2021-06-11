@@ -7,6 +7,7 @@ export async function loginUser(values) {
     const response = await axios.post(`${url}/user/login`, values);
     const data = response.data;
     if (data.user) {
+      localStorage.clear();
       localStorage.setItem('user', data.token);
       return { data: data };
     }
@@ -23,7 +24,10 @@ export async function createUser(user) {
   try {
     const response = await axios.post(`${url}/user/create`, user);
     const data = response.data;
+    console.log(response.data);
     if (data.user) {
+      localStorage.clear();
+      localStorage.setItem('user', data.token);
       return { data: data.user };
     }
     if (data.errors) {

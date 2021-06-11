@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { loginUser } from '../api/UserApi';
 
-function Login() {
+function Login({ sellerId }) {
   const [serverError, setServerError] = useState();
   const history = useHistory();
 
@@ -16,8 +16,9 @@ function Login() {
   const onSubmit = async (values, { setSubmitting, resetForm }) => {
     setSubmitting(true);
     const data = await loginUser(values);
-    console.log({ data });
+    
     if (data.data) {
+      setSubmitting(false);
       resetForm();
       return history.push('/product');
     }

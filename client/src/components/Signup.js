@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { createUser } from '../api/UserApi';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
-function Signup() {
+function Signup({ sellerId }) {
   const [serverError, setServerError] = useState();
   const history = useHistory();
 
@@ -25,7 +25,7 @@ function Signup() {
     if (data.data) {
       setSubmitting(false);
       resetForm();
-      return history.push('/login');
+      return history.push('/product');
     }
 
     if (data.error) {

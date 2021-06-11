@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { jwtAuthCheck } from '../api/jwtApi';
 
 function SellerCardComponent({ seller, setSellerId }) {
-  const [page, setPage] = useState('login');
+  const history = useHistory();
 
   const handleClick = async () => {
     setSellerId(seller._id);
     const user = localStorage.getItem('user') || null;
     const response = await jwtAuthCheck({ user });
-    localStorage.setItem('sellerId', seller._id);
-    console.log(seller, 'logedin');
-    setPage(response);
+    console.log(response);
+    if (response === 'user') {
+      return history.push('/product');
+    }
+    return history.push('/login');
   };
 
   return (
@@ -31,15 +33,12 @@ function SellerCardComponent({ seller, setSellerId }) {
                   <div className='card-body'>
                     <h5 className='card-title'>{seller.name}</h5>
                     <p className='card-text'>{seller.info}</p>
-                    {page && (
-                      <Link
+                      <div
                         onClick={handleClick}
-                        to={page === 'user' ? '/product' : '/login'}
                         className='btn btn-primary'
                       >
                         Go to Products
-                      </Link>
-                    )}
+                      </div>
                   </div>
                 </div>
               </div>

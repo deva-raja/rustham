@@ -17,7 +17,7 @@ function ProductCardComponent({ product, setProductId }) {
                 <img className='card-img-top' src={product.img} alt='...' />
 
                 <div className='card-body p-4'>
-                  <div class='text-center'>
+                  <div className='text-center'>
                     <h5 className='fw-bolder'>{product.name}</h5>
                     <div className='d-flex justify-content-center small text-warning mb-2'>
                       <div className='bi-star-fill'></div>

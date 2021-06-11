@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { showSellers } from '../api/SellerApi';
 import SellerCardComponent from './SellerCardComponent';
+// a@gmail.com
+// a123
 
 function SellerBodyComponent({ setSellerId }) {
   const [sellerArray, setSellerArray] = useState();

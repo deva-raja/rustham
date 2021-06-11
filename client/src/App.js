@@ -28,11 +28,11 @@ function App() {
             <SingleProductComponent productId={productId} />
           </Route>
           <Route exact path='/login'>
-            <Login client='USER ' />
-             {/* <Login client='SELLER ' /> */}
+            <Login client='USER' sellerId={sellerId} />
+            {/* <Login client='SELLER ' /> */}
           </Route>
           <Route exact path='/signup'>
-            <Signup />
+            <Signup sellerId={sellerId} />
           </Route>
           <Route exact path='/about'>
             <About />

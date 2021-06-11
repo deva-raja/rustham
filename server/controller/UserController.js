@@ -35,10 +35,8 @@ const createToken = (id) => {
 
 const login_post = async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
   try {
     const user = await User.login(email, password);
-
     const token = await createToken(user._id);
     res.status(201).json({ user: user._id, token });
   } catch (error) {
@@ -50,7 +48,8 @@ const login_post = async (req, res) => {
 const create_post = async (req, res) => {
   try {
     const user = await User.create(req.body);
-    res.status(201).json({ user });
+    const token = await createToken(user._id);
+    res.status(201).json({ user: user._id, token });
   } catch (error) {
     const errors = handleError(error);
     res.status(200).json({ errors });

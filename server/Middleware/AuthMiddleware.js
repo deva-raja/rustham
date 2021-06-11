@@ -5,6 +5,7 @@ const authMiddleWare = (req, res, next) => {
   if (user) {
     jwt.verify(user, 'rustham', (err, decodedToken) => {
       if (err) {
+        console.log(err.message);
         return res.json({ page: 'login' });
       }
       return res.json({ page: 'user' });
